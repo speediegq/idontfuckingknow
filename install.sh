@@ -166,9 +166,15 @@ fi
 cd /mnt/gentoo && ntpd -q -g && echo "Sync time using network."
 
 if [ $init = "openrc" ]; then
-    wget $stage3rc && echo "Downloaded stage3 to $rootPartition"
-elif [ $init = "systemd" ]; then
+        wget $stage3rc && echo "Downloaded stage3 to $rootPartition"
+else
+        echo "Ignoring option."
+fi
+
+if [ $init = "systemd" ]; then
 	wget $stage3d && echo "Downloaded stage3 to $rootPartition"
+else
+        echo "Ignoring option."
 fi
 
 tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner && echo "Unpacked the tarball to $rootPartition"
