@@ -96,7 +96,7 @@ echo -n "Would you like to specify a custom tarball? Y/N: " && read customtarbal
 if [ $customtarball = "Y" ]; then
 	echo -n "Give me a link to a valid tarball: " && read stage3custom && echo "Ok"
 else
-	echo "No tarball needs to be provided."
+	echo "No tarball needs to be provided." && customtarball=N
 fi
 
 if [ $stage3custom = "Y" ]; then
