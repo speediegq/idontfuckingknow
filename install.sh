@@ -105,9 +105,9 @@ else
 	echo "No custom tarball, ignoring.."
 fi
 
-if [ $stage3init == "systemd" ]; then
+if [ "$stage3init" = "systemd" ]; then
 	stage3d="$(stage3init)"
-elif [ $stage3init == "openrc" ]; then
+elif [ "$stage3init" = "openrc" ]; then
 	stage3rc="$(stage3init)"
 fi
 
@@ -117,7 +117,7 @@ else
 	echo "Ok." && kernelconfig=N
 fi
 
-if [ $kernelconfig == "speedie" ]; then
+if [ "$kernelconfig" = "speedie" ]; then
 	kernelconfig="https://raw.githubusercontent.com/speediegamer/configurations/main/usr/src/linux/.config"
 fi
 
@@ -157,7 +157,7 @@ else
 	mkdir -pv /mnt/gentoo && mount $rootPartition /mnt/gentoo && mounted=true
 fi
 
-if [ $mounted == "true" ]; then
+if [ "$mounted" = "true" ]; then
 	echo "We're successfully mounted :D"
 else
 	echo "Your partitions failed to mount. Please run the script again and make sure your inputs are valid! Are you sure you didn't forget to partition your disks?" && sleep 3 && exit
@@ -165,16 +165,10 @@ fi
 
 cd /mnt/gentoo && ntpd -q -g && echo "Sync time using network."
 
-if [ $init == "openrc" ]; then
+if [ "$init" = "openrc" ]; then
         wget $stage3rc && echo "Downloaded stage3 to $rootPartition"
 else
-        echo "Ignoring option."
-fi
-
-if [ $init == "systemd" ]; then
-	wget $stage3d && echo "Downloaded stage3 to $rootPartition"
-else
-        echo "Ignoring option."
+        wget $stage3d && echo "Downloaded stage3 to $rootPartition"
 fi
 
 tar xpvf stage3-*.tar.xz --xattrs-include='*.*' --numeric-owner && echo "Unpacked the tarball to $rootPartition"
@@ -197,7 +191,7 @@ chroot /mnt/gentoo /bin/bash && source /etc/profile && export PS1="CHROOT ${PS1}
 
 emerge-webrsync && emerge --sync --quiet && echo "Sync"
 
-if [ $init == "systemd" ]; then
+if [ "$init" = "systemd" ]; then
 	eselect profile set 17
 else
 	eselect profile set 1
@@ -205,10 +199,10 @@ fi
 
 emerge --quiet --update --deep --newuse @world && echo "Updated @world"
 
-if [ $init == "openrc" ]; then
+if [ "$init" = "openrc" ]; then
     echo "USE:'-systemd $useflags alsa" >> /etc/portage/make.conf
 else
-	echo "USE:'$useflags alsa" >> /etc/portage/make.conf
+    echo "USE:'$useflags alsa" >> /etc/portage/make.conf
 fi
 
 echo $timezone > /etc/timezone && emerge --config sys-libs/timezone-data
