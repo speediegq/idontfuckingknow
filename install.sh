@@ -27,6 +27,7 @@ else
 	echo "You're not running as root, please run this script with root permissions." && sleep 2 && exit
 fi
 
+echo
 echo "--/Settings!\--"
 echo
 
@@ -87,7 +88,6 @@ echo "-O2 is recommended, I personally use -O3 but it can cause code to break."
 echo -n "What compile optimizations should we use? Examples: O0, O2, O3, Ofast: " && read OX && echo "Using -$OX"
 
 echo -n "What timezone do we use? Examples: Europe/Amsterdam: " && read timezone && echo "Using $timezone"
-clear
 
 echo -n "What locale would you like to use? Examples: en_US: " && read locale && echo "Using $locale"
 
@@ -96,7 +96,7 @@ echo -n "Would you like to specify a custom tarball? Y/N: " && read customtarbal
 if [ $customtarball = "Y" ]; then
 	echo -n "Give me a link to a valid tarball: " && read stage3custom && echo "Ok"
 else
-	echo "No tarball needs to be provided." && customtarball=N
+	echo "No tarball needs to be provided." && stage3=N
 fi
 
 if [ $stage3custom = "Y" ]; then
@@ -114,7 +114,7 @@ fi
 if [ $kernel = "N" ]; then
 	echo -n "Specify a URL to a custom kernel. Or type speedie to use speedie's kernel: " && read kernelconfig
 else
-	echo "Ok."
+	echo "Ok." && kernelconfig=N
 fi
 
 if [ $kernelconfig = "speedie" ]; then
