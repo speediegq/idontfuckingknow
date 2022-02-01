@@ -99,7 +99,7 @@ else
 	echo "No tarball needs to be provided." && stage3=N
 fi
 
-if [ $stage3custom = "Y" ]; then
+if [ "$stage3tarball" = "Y" ]; then
 	echo -n "Is this a stage3 systemdick tarball or an OpenRC tarball?: systemd/openrc: " && read stage3init && echo "OK"
 else
 	echo "No custom tarball, ignoring.."
