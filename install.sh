@@ -137,7 +137,7 @@ fi
 
 echo -n "Are you sure you wanna do this? Y/N: " && read confirm
 
-if [ $rice = "Y" ]; then
+if [ $confirm = "Y" ]; then
 	echo "Alright, starting Gentoo installation process"
 else
 	echo "Quitting!" && sleep 3 && exit
